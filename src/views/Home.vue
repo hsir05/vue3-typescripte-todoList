@@ -27,7 +27,7 @@ export default defineComponent({
   components: {},
   setup() {
     const data = reactive({
-        todoList: ['']
+        todoList: ['1']
     })
     const todoValue = ref('');
     const handlePlus = () => {
@@ -36,7 +36,7 @@ export default defineComponent({
     }
     const handleMinus = (item: string) => {
         const index: number | undefined = data.todoList.findIndex(key => key === item);
-        if (index > 0) {
+        if (index >= 0) {
             data.todoList.splice(index, 1)
         }
     } 
