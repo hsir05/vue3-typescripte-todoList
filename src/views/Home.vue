@@ -21,34 +21,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, toRefs } from 'vue';
+import { defineComponent, reactive, toRefs } from 'vue';
 export default defineComponent({
   name: 'Home',
   components: {},
   setup() {
     const data = reactive({
-        todoList: ['']
+        todoList: [''],
+        todoValue: '',
+        handlePlus: () => {
+          if (!data.todoValue){
+                console.warn('请输入内容！');
+                return false
+            }
+            data.todoList.push(data.todoValue)
+            data.todoValue = ''
+        },
+        handleMinus: (item: string) => {
+            const index: number | undefined = data.todoList.findIndex(key => key === item);
+            if (index >= 0) {
+                data.todoList.splice(index, 1)
+            }
+        }
     })
-    const todoValue = ref('');
-    const handlePlus = () => {
-        if (!todoValue.value){
-            console.warn('请输入内容！');
-            return false
-        }
-        data.todoList.push(todoValue.value)
-        todoValue.value = ''
-    }
-    const handleMinus = (item: string) => {
-        const index: number | undefined = data.todoList.findIndex(key => key === item);
-        if (index >= 0) {
-            data.todoList.splice(index, 1)
-        }
-    } 
     return {
         ...toRefs(data),
-        handlePlus,
-        handleMinus,
-        todoValue,
     }
   }
 });
