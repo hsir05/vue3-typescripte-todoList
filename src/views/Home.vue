@@ -27,10 +27,14 @@ export default defineComponent({
   components: {},
   setup() {
     const data = reactive({
-        todoList: ['1']
+        todoList: ['']
     })
     const todoValue = ref('');
     const handlePlus = () => {
+        if (!todoValue.value){
+            console.warn('请输入内容！');
+            return false
+        }
         data.todoList.push(todoValue.value)
         todoValue.value = ''
     }
