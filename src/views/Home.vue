@@ -2,7 +2,7 @@
   <div class="home">
       <div class="wrap">
           <div >
-              <p class="title">todo</p>
+              <p class="title">todoList</p>
               <div class="input-wrap">
                   <input type="text" class="input" v-model="todoValue">
                   <div class="btn" @click="handlePlus(todoValue)">添加</div>
