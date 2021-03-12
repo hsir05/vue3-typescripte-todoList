@@ -38,7 +38,7 @@ export default defineComponent({
             data.todoValue = ''
         },
         handleMinus: (item: string) => {
-            const index: number | undefined = data.todoList.findIndex(key => key === item);
+            const index = data.todoList.findIndex(key => key === item);
             if (index >= 0) {
                 data.todoList.splice(index, 1)
             }
