@@ -15,7 +15,7 @@ export default defineComponent({
             required: true
         }
     },
-    setup(props) {
+    setup(props, context) {
         const data = reactive({
             todoValue: '',
             addTodo: (value: string) => {

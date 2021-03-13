@@ -1,7 +1,7 @@
 <template>
   <div class="home">
         <p class="title">todoList</p>
-        <AddTodoItem :handlePlus="handlePlus" />
+        <AddTodoItem :handlePlus="handlePlus"  />
         <Todo v-for="(item, index) in todoList" :todo="item" :index="index" :handleMinus="handleMinus" :key="index" />
       </div>
 </template>
@@ -20,14 +20,14 @@ export default defineComponent({
   setup() {
     const data = reactive<dataInterface>({
         todoList: [],
-        handleMinus: (index: number)=>{
+        handleMinus: (index)=>{
             data.todoList.splice(index, 1)
         },
-        handlePlus: (value: string) => {
+        handlePlus: (value) => {
             data.todoList.push(value)
         },
-        
-    })
+    });
+    
     return {
         ...toRefs(data),
     }
