@@ -1,6 +1,5 @@
 export interface dataInterface {
     todoList: string[],
-    todoValue: string, 
-    handlePlus: () => void,
+    handlePlus: (value: string) => void,
     handleMinus: (index: number) => void,
 }
