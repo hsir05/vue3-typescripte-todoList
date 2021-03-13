@@ -22,11 +22,12 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
+import { dataInterface } from '../types/types'
 export default defineComponent({
   name: 'Home',
   components: {},
   setup() {
-    const data = reactive({
+    const data = reactive<dataInterface>({
         todoList: [''],
         todoValue: '',
         handlePlus: () => {
@@ -37,7 +38,7 @@ export default defineComponent({
             data.todoList.push(data.todoValue)
             data.todoValue = ''
         },
-        handleMinus: (item: string) => {
+        handleMinus: (item) => {
             const index = data.todoList.findIndex(key => key === item);
             if (index >= 0) {
                 data.todoList.splice(index, 1)
