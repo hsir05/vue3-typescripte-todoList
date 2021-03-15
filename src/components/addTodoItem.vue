@@ -5,7 +5,7 @@
 </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, reactive, ref, toRefs } from 'vue'
 
 export default defineComponent({
     name: 'addTodoItem',
@@ -16,6 +16,7 @@ export default defineComponent({
         }
     },
     setup(props, context) {
+        const todoValue = ref('')
         const data = reactive({
             todoValue: '',
             addTodo: (value: string) => {
