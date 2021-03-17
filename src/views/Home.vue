@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, toRefs, watch } from 'vue';
+import { defineComponent, ref, reactive, toRefs, watch, watchEffect } from 'vue';
 import { dataInterface } from '../types/types'
 import Todo from '../components/todoItem.vue'
 import AddTodoItem from '../components/addTodoItem.vue'
@@ -19,34 +19,65 @@ export default defineComponent({
   },
   setup() {
     const year = ref(12)
-    const data = reactive<dataInterface>({
+    const state = reactive<dataInterface>({
         todoList: [],
+        person: {
+            age: 12,
+            sex: '男'
+        },
         handleMinus: (index)=>{
-            data.todoList.splice(index, 1)
+            state.todoList.splice(index, 1)
         },
         handlePlus: (value) => {
-            data.todoList.push(value)
+            state.todoList.push(value)
             year.value +=1
+            state.person.age +=3
         },
     });
     // //侦听ref 数据
-    // watch(year, (newVal, oldVal) =>{
-    //     console.log("新值year:", newVal, "老值:", oldVal);
-    // })
+    watch(year, (newVal, oldVal) =>{
+        console.log("新值year:", newVal, "老值:", oldVal);
+    })
+
     // // 侦听reactive数据
     // watch(
-    //   data.todoList,
+    //   state.todoList,
     //   (curAge) => {
     //     console.log("新值:", [...curAge]);
     //   },
     // );
+
     // 多值侦听
-    watch([() => data.todoList, year], ([curAge, preAge], [newVal, oldVal]) => {
-        console.log("新值:", curAge, "老值:", preAge);
-        console.log("新值:", newVal, "老值:", oldVal);
-    });
+    // watch([() => state.todoList, year], ([curAge, preAge], [newVal, oldVal]) => {
+    //     console.log("新值:", curAge, "老值:", preAge);
+    //     console.log("新值:", newVal, "老值:", oldVal);
+    // });
+
+    // 侦听复杂嵌套数据需要添加第三个参数{deep: true}，
+    // 默认watch 是惰性的，只有在设置immediate: true时，才会立即执行回调函数，还有关于
+    // flush配置
+    // watch(() => state.person, (newType, oldType) => {
+    //     console.log("新值:", newType, "老值:", oldType);
+    // }, {deep:true});
+    
+
+    // 停止监听
+    // 监听函数会在组件销毁时自动停止监听，如果要手动停止可以  调用watch函数的返回值
+    // const stopWatch = watch(() => state.person, (newType, oldType) => {
+    //     console.log("新值:", newType, "老值:", oldType);
+    // }, {deep:true});
+
+    // stopWatch()
+
+    // 监听副作用函数
+    watchEffect(() => {
+        console.log(state);
+        console.log(year);
+      }
+    );
+
     return {
-        ...toRefs(data),
+        ...toRefs(state),
     }
   }
 });
