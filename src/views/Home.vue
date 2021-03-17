@@ -29,17 +29,22 @@ export default defineComponent({
             year.value +=1
         },
     });
-    //侦听ref 数据
-    watch(year, (newVal, oldVal) =>{
-        console.log("新值year:", newVal, "老值:", oldVal);
-    })
-    // 侦听reactive数据
-    watch(
-      data.todoList,
-      (curAge) => {
-        console.log("新值:", [...curAge]);
-      },
-    );
+    // //侦听ref 数据
+    // watch(year, (newVal, oldVal) =>{
+    //     console.log("新值year:", newVal, "老值:", oldVal);
+    // })
+    // // 侦听reactive数据
+    // watch(
+    //   data.todoList,
+    //   (curAge) => {
+    //     console.log("新值:", [...curAge]);
+    //   },
+    // );
+    // 多值侦听
+    watch([() => data.todoList, year], ([curAge, preAge], [newVal, oldVal]) => {
+        console.log("新值:", curAge, "老值:", preAge);
+        console.log("新值:", newVal, "老值:", oldVal);
+    });
     return {
         ...toRefs(data),
     }
