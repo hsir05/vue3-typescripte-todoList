@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, toRefs } from 'vue';
+import { defineComponent, ref, reactive, toRefs, watch } from 'vue';
 import { dataInterface } from '../types/types'
 import Todo from '../components/todoItem.vue'
 import AddTodoItem from '../components/addTodoItem.vue'
@@ -18,7 +18,7 @@ export default defineComponent({
       AddTodoItem
   },
   setup() {
-     const test = ref('11')
+    const year = ref(12)
     const data = reactive<dataInterface>({
         todoList: [],
         handleMinus: (index)=>{
@@ -26,12 +26,20 @@ export default defineComponent({
         },
         handlePlus: (value) => {
             data.todoList.push(value)
-            test.value = value
+            year.value +=1
         },
     });
-    // watchEffect(() => {
-    //     console.log(test);
-    // })
+    //侦听ref 数据
+    watch(year, (newVal, oldVal) =>{
+        console.log("新值year:", newVal, "老值:", oldVal);
+    })
+    // 侦听reactive数据
+    watch(
+      data.todoList,
+      (curAge) => {
+        console.log("新值:", [...curAge]);
+      },
+    );
     return {
         ...toRefs(data),
     }
